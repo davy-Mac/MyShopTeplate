@@ -10,9 +10,10 @@ namespace MyShop.Core.Models
 {
     public class Product
     {
+        public string Id { get; set; }
+
         [StringLength(20)]
         [DisplayName("Product Name")]
-        public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 

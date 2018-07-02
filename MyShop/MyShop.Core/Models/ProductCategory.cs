@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyShop.Core.Models
+﻿namespace MyShop.Core.Models
 {
-    public class ProductCategory
+    public class ProductCategory : BaseEntity
     {
-        public string Id { get; set; }
+        //public string Id { get; set; } // this is handled by the BaseEntity class
         public string Category { get; set; }
 
-        public ProductCategory()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
+        //public ProductCategory() // this is handled by the BaseEntity class
+        //{
+        //    this.Id = Guid.NewGuid().ToString();
+        //}
     }
 }

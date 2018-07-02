@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
-using System.Text;
-using System.Threading.Tasks;
+
+/// <summary>
+///  this entire class is no longer necessary as Generics (generic repository) has been implemented
+/// </summary>
 
 namespace MyShop.DataAccess.InMemory
 {

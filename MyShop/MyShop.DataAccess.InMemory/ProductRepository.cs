@@ -1,11 +1,13 @@
-﻿using System;
+﻿using MyShop.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.Caching;
-using MyShop.Core;
-using MyShop.Core.Models;
+
+
+/// <summary>
+///  this entire class is no longer necessary as Generics (generic repository) has been implemented
+/// </summary>
 
 namespace MyShop.DataAccess.InMemory
 {
@@ -17,7 +19,7 @@ namespace MyShop.DataAccess.InMemory
         public ProductRepository()
         {
             products = cahe["products"] as List<Product>;
-            if(products == null)    // checks is there are no products in the list
+            if (products == null)    // checks is there are no products in the list
             {
                 products = new List<Product>(); // if no products in list create a new list
             }
@@ -37,7 +39,7 @@ namespace MyShop.DataAccess.InMemory
         {
             Product productToUpdate = products.Find(p => p.Id == product.Id); // lamda to find and pas the product Id to the productToUpdate method
 
-            if(productToUpdate != null) // checks if there is a product
+            if (productToUpdate != null) // checks if there is a product
             {
                 productToUpdate = product;
             }
@@ -51,7 +53,7 @@ namespace MyShop.DataAccess.InMemory
         {
             Product product = products.Find(p => p.Id == Id); // it only finds the Id and passes it to product
 
-            if(product != null)
+            if (product != null)
             {
                 return product;
             }
@@ -70,7 +72,7 @@ namespace MyShop.DataAccess.InMemory
         {
             Product productToDelete = products.Find(p => p.Id == Id); // finds the product Id to pass it to the delete method
 
-            if(productToDelete != null)
+            if (productToDelete != null)
             {
                 products.Remove(productToDelete);
             }

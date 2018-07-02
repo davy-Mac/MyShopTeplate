@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using MyShop.Core.Models;
+﻿using MyShop.Core.Models;
 using MyShop.Core.ViewModels;
 using MyShop.DataAccess.InMemory;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace MyShop.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        ProductRepository context;
-        ProductCategoryRepository productCategories;
+        private InMemoryRepository<Product> context;
+        private InMemoryRepository<ProductCategory> productCategories;
+        //ProductRepository context;
+        //ProductCategoryRepository productCategories;
 
         public ProductManagerController()
         {
-            context = new ProductRepository();
-            productCategories = new ProductCategoryRepository();
+            context = new InMemoryRepository<Product>();
+            productCategories = new InMemoryRepository<ProductCategory>();
         }
 
         // GET: ProductManager
@@ -54,7 +54,7 @@ namespace MyShop.WebUI.Controllers
         public ActionResult Edit(string Id)
         {
             Product product = context.Find(Id);
-            if(product == null)
+            if (product == null)
             {
                 return HttpNotFound();
             }
@@ -73,7 +73,7 @@ namespace MyShop.WebUI.Controllers
         {
             Product productToEdit = context.Find(Id);
 
-            if(productToEdit == null)
+            if (productToEdit == null)
             {
                 return HttpNotFound();
             }

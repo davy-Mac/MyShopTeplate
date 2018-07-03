@@ -1,6 +1,6 @@
-﻿using MyShop.Core.Models;
+﻿using MyShop.Core.Contracts;
+using MyShop.Core.Models;
 using MyShop.Core.ViewModels;
-using MyShop.DataAccess.InMemory;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -9,15 +9,15 @@ namespace MyShop.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        private InMemoryRepository<Product> context;
-        private InMemoryRepository<ProductCategory> productCategories;
+        private IRepository<Product> context;
+        private IRepository<ProductCategory> productCategories;
         //ProductRepository context;
         //ProductCategoryRepository productCategories;
 
-        public ProductManagerController()
+        public ProductManagerController(IRepository<Product> productContext, IRepository<ProductCategory> productCategoryContext) //IRepository interface injected
         {
-            context = new InMemoryRepository<Product>();
-            productCategories = new InMemoryRepository<ProductCategory>();
+            context = productContext;
+            productCategories = productCategoryContext;
         }
 
         // GET: ProductManager

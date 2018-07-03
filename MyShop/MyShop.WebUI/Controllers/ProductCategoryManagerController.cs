@@ -1,5 +1,5 @@
-﻿using MyShop.Core.Models;
-using MyShop.DataAccess.InMemory;
+﻿using MyShop.Core.Contracts;
+using MyShop.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -8,11 +8,12 @@ namespace MyShop.WebUI.Controllers
 {
     public class ProductCategoryManagerController : Controller
     {
-        InMemoryRepository<ProductCategory> context;
+        IRepository<ProductCategory> context;
+        //InMemoryRepository<ProductCategory> context; // no longer necessary, we will use IRepository Interface
 
-        public ProductCategoryManagerController()
+        public ProductCategoryManagerController(IRepository<ProductCategory> context) // IRepository Injected
         {
-            context = new InMemoryRepository<ProductCategory>();
+            this.context = context;
         }
 
         // GET: ProductManager

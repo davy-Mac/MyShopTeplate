@@ -22,25 +22,31 @@ namespace MyShop.Services
 
         private Basket GetBasket(HttpContextBase httpContext, bool createIfNull) // returns the basket object
         {
-            var cookie = httpContext.Request.Cookies.Get(BasketSessionName); // assigns the SessionName as cookie
+            HttpCookie cookie = httpContext.Request.Cookies.Get(BasketSessionName); // assigns the SessionName as cookie
 
-            var basket = new Basket(); // creates a new basket
+            Basket basket = new Basket(); // creates a new basket
+
             if (cookie != null) // checks if there is an existing cookie
             {
-                var basketId = cookie.Value;
+                string basketId = cookie.Value;
                 if (!string.IsNullOrEmpty(basketId))
                 {
                     basket = basketContext.Find(basketId); // find the basket Id if it exists
                 }
                 else
                 {
-                    if (createIfNull) basket = CreateNewBasket(httpContext);
+                    if (createIfNull)
+                    {
+                        basket = CreateNewBasket(httpContext);
+                    }
                 }
             }
-
             else
             {
-                if (createIfNull) basket = CreateNewBasket(httpContext);
+                if (createIfNull)
+                {
+                    basket = CreateNewBasket(httpContext);
+                }
             }
 
             return basket;
@@ -48,11 +54,11 @@ namespace MyShop.Services
 
         private Basket CreateNewBasket(HttpContextBase httpContext) // creates a new instance of basket
         {
-            var basket = new Basket();
+            Basket basket = new Basket();
             basketContext.Insert(basket);
             basketContext.Commit();
 
-            var cookie = new HttpCookie(BasketSessionName);
+            HttpCookie cookie = new HttpCookie(BasketSessionName);
             cookie.Value = basket.Id;
             cookie.Expires = DateTime.Now.AddDays(1); // expiry interval for the cookie
             httpContext.Response.Cookies.Add(cookie); // sends response back to the user
@@ -88,7 +94,7 @@ namespace MyShop.Services
             Basket basket = GetBasket(httpContext, true);
             BasketItem item = basket.BasketItems.FirstOrDefault(i => i.Id == itemId);
 
-            if (itemId != null)
+            if (item != null)
             {
                 basket.BasketItems.Remove(item);
                 basketContext.Commit();
@@ -133,7 +139,7 @@ namespace MyShop.Services
                                         join p in productContext.Collection() on item.ProductId equals p.Id
                                         select item.Quantity * p.Price).Sum();
 
-                model.BasketCount = basketCount ?? 0; // if the basket is empty it will default to 0, 0
+                model.BasketCount = basketCount ?? 0; // if the basket is empty it will default to 0
                 model.BasketTotal = basketTotal ?? decimal.Zero; // again if the basket is empty it will default to 0, 0
 
                 return model;

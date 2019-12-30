@@ -5,7 +5,7 @@
         public int BasketCount { get; set; }
         public decimal BasketTotal { get; set; }
 
-        public BasketSummaryViewModel() // this is empty to set default values
+        public BasketSummaryViewModel() // this is an empty constructor to set default values
         {
 
         }

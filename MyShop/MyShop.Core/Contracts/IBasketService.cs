@@ -6,6 +6,7 @@ namespace MyShop.Core.Contracts
 {
     public interface IBasketService
     {
+        // HttpContext is used to write & read the session (cookie) in the users browser 
         void AddToBasket(HttpContextBase httpContext, string productId); // these are the methods extracted "copied" from BasketService
         void RemoveFromBasket(HttpContextBase httpContext, string itemId);// these are the methods extracted "copied" from BasketService
         List<BasketItemViewModel> GetBasketItems(HttpContextBase httpContext);// these are the methods extracted "copied" from BasketService

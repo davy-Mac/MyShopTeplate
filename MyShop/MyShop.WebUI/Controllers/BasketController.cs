@@ -5,14 +5,14 @@ namespace MyShop.WebUI.Controllers
 {
     public class BasketController : Controller
     {
-        private IBasketService basketService;
+        private IBasketService basketService; // local instance of IBasketService
 
-        public BasketController(IBasketService BasketService)
+        public BasketController(IBasketService BasketService) // constructor to inject BasketService
         {
             this.basketService = BasketService;
         }
         // GET: Basket
-        public ActionResult Index()
+        public ActionResult Index() // view of the list of basket items
         {
             var model = basketService.GetBasketItems(this.HttpContext);
             return View(model);

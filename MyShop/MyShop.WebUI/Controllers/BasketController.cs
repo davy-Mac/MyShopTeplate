@@ -1,15 +1,18 @@
 ﻿using MyShop.Core.Contracts;
 using System.Web.Mvc;
+using MyShop.Core.Models;
 
 namespace MyShop.WebUI.Controllers
 {
     public class BasketController : Controller
     {
-        private IBasketService basketService; // local instance of IBasketService
+        readonly IBasketService basketService; // local instance of IBasketService
+        private IOrderService orderService; // local instance of IOrderService 
 
-        public BasketController(IBasketService BasketService) // constructor to inject BasketService
+        public BasketController(IBasketService BasketService, IOrderService OrderService) // constructor to inject BasketService
         {
             this.basketService = BasketService;
+            this.orderService= OrderService;
         }
         // GET: Basket
         public ActionResult Index() // view of the list of basket items
@@ -38,5 +41,33 @@ namespace MyShop.WebUI.Controllers
 
             return PartialView(basketSummary);
         }
+
+        // Checkout endpoint
+        public ActionResult Checkout() // method that returns the Checkout view
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Checkout(Order order)
+        {
+            var basketItems = basketService.GetBasketItems(this.HttpContext);
+            order.OrderStatus = "Order Created";
+
+            // process payment
+
+            order.OrderStatus = "Payment Processed";
+            orderService.CreateOrder(order, basketItems);
+            basketService.ClearBasket(this.HttpContext);
+
+            return RedirectToAction("ThankYou", new {OrderId = order.Id});
+        }
+
+        public ActionResult ThankYou(string OrderId) // method that return the ThankYou view
+        {
+            ViewBag.OrderId = OrderId;
+            return View();
+        }
+
     }
 }

@@ -10,5 +10,6 @@ namespace MyShop.Core.Contracts
         void RemoveFromBasket(HttpContextBase httpContext, string itemId);// these are the methods extracted "copied" from BasketService
         List<BasketItemViewModel> GetBasketItems(HttpContextBase httpContext);// these are the methods extracted "copied" from BasketService
         BasketSummaryViewModel GetBasketSummary(HttpContextBase httpContext);// these are the methods extracted "copied" from BasketService
+        void ClearBasket(HttpContextBase httpContext); // "copied" from BasketService
     }
 }

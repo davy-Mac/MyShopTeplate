@@ -49,7 +49,7 @@ namespace MyShop.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Checkout(Order order)
+        public ActionResult Checkout(Order order) // this method doesn't need a view, is the logic to process the payment
         {
             var basketItems = basketService.GetBasketItems(this.HttpContext);
             order.OrderStatus = "Order Created";

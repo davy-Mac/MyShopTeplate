@@ -34,5 +34,22 @@ namespace MyShop.Services
             orderContext.Insert(baseOrder);
             orderContext.Commit();
         }
+
+        // 3 methods below give Management functionality
+        public List<Order> GetOrderList()
+        {
+            return orderContext.Collection().ToList();
+        }
+
+        public Order GetOrder(string Id)
+        {
+            return orderContext.Find(Id);
+        }
+
+        public void UpdateOrder(Order updateOrder)
+        {
+            orderContext.Update(updateOrder);
+            orderContext.Commit();
+        }
     }
 }
